@@ -1,7 +1,19 @@
 
 <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Put words here</mat-label>
-    <input matInput placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput">
+    <input matInput disabled placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput">
   </mat-form-field>
 
 <mat-label>{{score}}</mat-label>
+
+<br>
+
+<input hidden #keyboardBox [(ngModel)]="keyboardText">
+
+<!--
+    <button mat-button (click)="test()">Test</button>
+-->
+
+<!--
+    <input [matKeyboard]="''">
+-->

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
+import { AbstractControl, FormControl, NgControl, NgModel, Validators } from '@angular/forms';
 import { HostListener } from '@angular/core';
+import { IKeyboardLayout, MatKeyboardComponent, MatKeyboardRef, MatKeyboardService, MAT_KEYBOARD_LAYOUTS } from 'angular-onscreen-material-keyboard';  // '@ngx-material-keyboard/core';
 
 @Component({
   selector: 'app-word-box',
@@ -9,16 +10,32 @@ import { HostListener } from '@angular/core';
 })
 export class WordBoxComponent implements OnInit {
 
+  private keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
+
+  @ViewChild('keyboardBox', { read: ElementRef })
+   keyboardAttachedElement !: ElementRef;
+
+  @ViewChild('keyboardBox', { read: NgModel })
+   keyboardAttachedControl !: NgControl;
+  
   public score: number = 0;
   public word: string = '';
-
-  public get wordInput(): string {
-    return this.word;
-  }
-
+  
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
     console.log(event.key + " pressed");
+  }
+
+  public get keyboardText(): string {
+    return this.word;
+  }
+
+  public set keyboardText(value: string) {
+    this.wordInput = value;
+  }
+
+  public get wordInput(): string {
+    return this.word;
   }
 
   public set wordInput(value: string) {
@@ -46,9 +63,29 @@ export class WordBoxComponent implements OnInit {
 
   wordControl: FormControl = new FormControl('', Validators.required);
 
-  constructor() { }
+  // constructor() { }
+  // ngOnInit(): void { }
+
+  constructor(private _keyboardService: MatKeyboardService,) { 
+    this.keyboardRef = this._keyboardService.open('', {
+      darkTheme: true,
+    });
+
+
+  }
 
   ngOnInit(): void {
+    // setTimeout to give the view a sec to come up
+    setTimeout(() => {
+      // reference the input element
+      this.keyboardRef.instance.setInputInstance(this.keyboardAttachedElement);
+      // set control
+      this.keyboardRef.instance.attachControl(this.keyboardAttachedControl.control as AbstractControl);
+    })
+  }
+
+  public test() {
+    console.log(this.keyboardText);
   }
 
 }

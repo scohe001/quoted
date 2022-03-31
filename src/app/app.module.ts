@@ -13,6 +13,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatKeyboardModule } from 'angular-onscreen-material-keyboard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +32,9 @@ import { CommonModule } from '@angular/common'
     MatInputModule,
     FormsModule,
     CommonModule,
+
+    MatButtonModule,
+    MatKeyboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
