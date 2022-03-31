@@ -3,14 +3,32 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MainGameComponent } from './main-game/main-game.component';
+import { WordBoxComponent } from './main-game/word-box/word-box.component';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainGameComponent,
+    WordBoxComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+
+    MatFormFieldModule,
+    MatSliderModule,
+    MatInputModule,
+    FormsModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
