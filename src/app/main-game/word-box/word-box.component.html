@@ -1,19 +1,21 @@
 
-<mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Put words here</mat-label>
-    <input matInput disabled placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput">
-  </mat-form-field>
+<div class="holder">
 
-<mat-label>{{score}}</mat-label>
+  <div class="content">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Put words here</mat-label>
+      <input matInput disabled placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput">
+    </mat-form-field>
+  
+    <br>
+  
+    <mat-label>{{score}}</mat-label>
+  </div>
+  
+  <footer class="footer">
+    <div class="keyboard">
+      <app-keyboard (keyPressed)="keyPressed($event)" (backspacePressed)="backspacePressed()"></app-keyboard>
+    </div>
+  </footer>
 
-<br>
-
-<input hidden #keyboardBox [(ngModel)]="keyboardText">
-
-<!--
-    <button mat-button (click)="test()">Test</button>
--->
-
-<!--
-    <input [matKeyboard]="''">
--->
+</div>

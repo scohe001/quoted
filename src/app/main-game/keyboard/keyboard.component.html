@@ -1,0 +1,26 @@
+
+<div class="keyboard">
+    <div class="keyrow">
+        <button class="key single" *ngFor="let key of keys[0]" (click)="_keyPressed(key)">{{key}}</button>
+    </div>
+
+    <div class="keyrow">
+        <div class="single"></div>
+        <button class="key single" *ngFor="let key of keys[1]" (click)="_keyPressed(key)">{{key}}</button>
+        <div class="single"></div>
+    </div>
+
+    <div class="keyrow">
+        <div class="single"></div>
+        <div class="single"></div>
+        <button class="key single" *ngFor="let key of keys[2]" (click)="_keyPressed(key)">{{key}}</button>
+        <div class="half"></div>
+        <button class="key singlehalf" (click)="_backspacePressed()">⌫</button>
+    </div>
+
+    <div class="keyrow">
+        <div class="single"></div>
+        <button class="key double" (click)="_keyPressed(' ')"></button>
+        <div class="single"></div>
+    </div>
+</div>

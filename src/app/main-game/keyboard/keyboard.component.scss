@@ -1,0 +1,39 @@
+.key {
+    height: 40px;
+}
+
+.half {
+    flex: .5;
+}
+
+.single {
+    flex: 1;
+}
+
+.singlehalf {
+    flex: 1.5;
+}
+
+.double {
+    flex: 2;
+}
+
+.keybutton {
+    width: 100%;
+    height: 100%;
+}
+
+.keyrow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1px;
+}
+
+.keyboard {
+    width: 95%;
+    max-width: 600px;
+    margin: auto;
+}

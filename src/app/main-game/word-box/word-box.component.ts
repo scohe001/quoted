@@ -9,14 +9,6 @@ import { IKeyboardLayout, MatKeyboardComponent, MatKeyboardRef, MatKeyboardServi
   styleUrls: ['./word-box.component.scss']
 })
 export class WordBoxComponent implements OnInit {
-
-  private keyboardRef: MatKeyboardRef<MatKeyboardComponent>;
-
-  @ViewChild('keyboardBox', { read: ElementRef })
-   keyboardAttachedElement !: ElementRef;
-
-  @ViewChild('keyboardBox', { read: NgModel })
-   keyboardAttachedControl !: NgControl;
   
   public score: number = 0;
   public word: string = '';
@@ -63,29 +55,22 @@ export class WordBoxComponent implements OnInit {
 
   wordControl: FormControl = new FormControl('', Validators.required);
 
-  // constructor() { }
-  // ngOnInit(): void { }
+  constructor() {  }
 
-  constructor(private _keyboardService: MatKeyboardService,) { 
-    this.keyboardRef = this._keyboardService.open('', {
-      darkTheme: true,
-    });
-
-
-  }
-
-  ngOnInit(): void {
-    // setTimeout to give the view a sec to come up
-    setTimeout(() => {
-      // reference the input element
-      this.keyboardRef.instance.setInputInstance(this.keyboardAttachedElement);
-      // set control
-      this.keyboardRef.instance.attachControl(this.keyboardAttachedControl.control as AbstractControl);
-    })
-  }
+  ngOnInit(): void { }
 
   public test() {
     console.log(this.keyboardText);
+  }
+
+  public keyPressed(key: string) {
+    this.wordInput += key;
+  }
+
+  public backspacePressed() {
+    if(this.wordInput.length <= 0) { return; }
+
+    this.wordInput = this.wordInput.substring(0, this.wordInput.length - 1);
   }
 
 }

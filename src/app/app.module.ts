@@ -15,12 +15,14 @@ import { CommonModule } from '@angular/common'
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatKeyboardModule } from 'angular-onscreen-material-keyboard';
+import { KeyboardComponent } from './main-game/keyboard/keyboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainGameComponent,
-    WordBoxComponent
+    WordBoxComponent,
+    KeyboardComponent
   ],
   imports: [
     BrowserModule,
