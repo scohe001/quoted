@@ -1,8 +1,10 @@
 import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, FormControl, NgControl, NgModel, Validators } from '@angular/forms';
 import { HostListener } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DictionaryService } from '../../services/dictionary.service'
 import { DictionaryResponse } from '../../interfaces/dictionaryResponse';
+import { DefinitionDialogue } from './definition-dialogue';
 
 @Component({
   selector: 'app-word-box',
@@ -64,7 +66,8 @@ export class WordBoxComponent implements OnInit {
 
   wordControl: FormControl = new FormControl('', Validators.required);
 
-  constructor(public dictionaryManager: DictionaryService) {  }
+  constructor(public dictionaryManager: DictionaryService,
+    public dialog: MatDialog) {  }
 
   ngOnInit(): void {
     this.wordInput = '';
@@ -89,6 +92,13 @@ export class WordBoxComponent implements OnInit {
 
   public clear() {
     this.wordInput = '';
+  }
+
+  public wordTap(word: Word) {
+    const dialogRef = this.dialog.open(DefinitionDialogue, {
+      width: '250px',
+      data: word,
+    });
   }
 
   private parseWords(value: string) {
@@ -118,7 +128,7 @@ export class WordBoxComponent implements OnInit {
   }
 }
 
-class Word {
+export class Word {
   public word: string;
   public definition: string;
   public isGood: boolean;
@@ -149,7 +159,7 @@ class Word {
         this.isGood = true;
       })
       .catch((err: any) => {
-        this.definition = '';
+        this.definition = 'Word not found.';
         this.isGood = false;
         console.log(err);
       });

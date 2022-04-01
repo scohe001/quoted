@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common'
 
 import { MatButtonModule } from '@angular/material/button';
 import { KeyboardComponent } from './main-game/keyboard/keyboard.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -34,11 +35,17 @@ import { KeyboardComponent } from './main-game/keyboard/keyboard.component';
     MatInputModule,
     FormsModule,
     CommonModule,
+    MatDialogModule,
 
     MatButtonModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

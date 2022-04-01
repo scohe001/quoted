@@ -3,7 +3,7 @@
 
   <div class="content">
     <div class="words">
-      <span [ngClass]="word.isGood ? 'goodWord' : 'badWord'" class="word" *ngFor="let word of words">
+      <span *ngFor="let word of words" [ngClass]="word.isGood ? 'goodWord' : 'badWord'" class="word" (click)="wordTap(word)">
           {{word.word}}
       </span>
       <span class="cursor"></span>
