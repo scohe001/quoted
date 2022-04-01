@@ -38,4 +38,6 @@
 
 .keyboard {
     margin-bottom: 10px;
+    // Prevent double tap to zoom
+    touch-action: manipulation;
 }
