@@ -29,11 +29,16 @@
     flex-wrap: nowrap;
     justify-content: center;
     align-items: stretch;
-    gap: 1px;
+    gap: 2px;
+    padding: 1px 0 1px 0;
 }
 
 .keyboard {
     width: 95%;
     max-width: 600px;
     margin: auto;
+}
+
+.mat-flat-button {
+    min-width: 1%;
 }
