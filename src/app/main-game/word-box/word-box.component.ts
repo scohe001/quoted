@@ -11,7 +11,9 @@ import { IKeyboardLayout, MatKeyboardComponent, MatKeyboardRef, MatKeyboardServi
 export class WordBoxComponent implements OnInit {
   
   public score: number = 0;
-  public word: string = '';
+  public targetScore: number = 100;
+  public textEntered: string = '';
+  public words: Array<Word> = []
   
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
@@ -19,7 +21,7 @@ export class WordBoxComponent implements OnInit {
   }
 
   public get keyboardText(): string {
-    return this.word;
+    return this.textEntered;
   }
 
   public set keyboardText(value: string) {
@@ -27,12 +29,13 @@ export class WordBoxComponent implements OnInit {
   }
 
   public get wordInput(): string {
-    return this.word;
+    return this.textEntered;
   }
 
   public set wordInput(value: string) {
-    this.word = value;
+    this.textEntered = value;
     let lowerWord: string = value.toLowerCase();
+    this.parseWords(lowerWord);
     this.score = 0;
     for (let index = 0; index < lowerWord.length; index++) {
       if(!this.isAlpha(lowerWord[index])) { continue; }
@@ -57,7 +60,12 @@ export class WordBoxComponent implements OnInit {
 
   constructor() {  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.wordInput = '';
+
+    // TODO: Calc some unique targetScore based on date
+    // targetScore = ???;
+  }
 
   public test() {
     console.log(this.keyboardText);
@@ -73,4 +81,50 @@ export class WordBoxComponent implements OnInit {
     this.wordInput = this.wordInput.substring(0, this.wordInput.length - 1);
   }
 
+  public clear() {
+    this.wordInput = '';
+  }
+
+  private parseWords(value: string) {
+    this.words = []; // Clear what's already in there
+
+    var values: Array<string> = value.split(' ');
+
+    values.forEach(word => {
+      if(word.length === 0) { return; }
+
+      // TODO: Check the dictionary API here
+      this.words.push(new Word(word));
+        // {word: word, definition: '', isGood: true});
+    });
+
+    if(this.words.length === 0 || values[values.length - 1].length === 0) {
+      this.words.push(new Word(''));
+    }
+
+
+    // On second thought, maybe we don't want this?
+    // // Flip the word they're entering to good
+    // if(this.words.length > 0) {
+    //   this.words[this.words.length - 1].isGood = true;
+    // }
+
+    console.log(this.words);
+  }
+}
+
+class Word {
+  public word: string;
+  public definition: string;
+  public isGood: boolean;
+
+  constructor(word: string) {
+    // console.log("Constructor called with: " + word);
+    this.word = word;
+
+    // TODO: Check dictionary API here
+    // TODO: EXCEPT in the case word.length === 0
+    this.definition = '';
+    this.isGood = true;
+  }
 }

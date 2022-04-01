@@ -2,17 +2,23 @@
 <div class="holder">
 
   <div class="content">
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Put words here</mat-label>
-      <input matInput disabled placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput">
-    </mat-form-field>
-  
-    <br>
-  
-    <mat-label>{{score}}</mat-label>
+    <div class="words">
+      <span class="word" *ngFor="let word of words">{{word.word}}</span>
+      <span class="cursor"></span>
+    </div>
+
+
   </div>
   
   <footer class="footer">
+    <div class="score">
+      <mat-label>{{score}} / {{targetScore}}</mat-label>
+    </div>
+
+    <div class="clear">
+        <button mat-flat-button (click)="clear()">Clear</button>
+    </div>
+
     <div class="keyboard">
       <app-keyboard (keyPressed)="keyPressed($event)" (backspacePressed)="backspacePressed()"></app-keyboard>
     </div>
