@@ -1,7 +1,8 @@
 import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, FormControl, NgControl, NgModel, Validators } from '@angular/forms';
 import { HostListener } from '@angular/core';
-import { IKeyboardLayout, MatKeyboardComponent, MatKeyboardRef, MatKeyboardService, MAT_KEYBOARD_LAYOUTS } from 'angular-onscreen-material-keyboard';  // '@ngx-material-keyboard/core';
+import { DictionaryService } from '../../services/dictionary.service'
+import { DictionaryResponse } from '../../interfaces/dictionaryResponse';
 
 @Component({
   selector: 'app-word-box',
@@ -33,6 +34,11 @@ export class WordBoxComponent implements OnInit {
   }
 
   public set wordInput(value: string) {
+    if(value.length >= 2
+      && value[value.length - 1] == value[value.length -2 ]
+      && value[value.length - 1] === ' ')
+      { return; }
+
     this.textEntered = value;
     let lowerWord: string = value.toLowerCase();
     this.parseWords(lowerWord);
@@ -58,7 +64,7 @@ export class WordBoxComponent implements OnInit {
 
   wordControl: FormControl = new FormControl('', Validators.required);
 
-  constructor() {  }
+  constructor(public dictionaryManager: DictionaryService) {  }
 
   ngOnInit(): void {
     this.wordInput = '';
@@ -94,14 +100,13 @@ export class WordBoxComponent implements OnInit {
       if(word.length === 0) { return; }
 
       // TODO: Check the dictionary API here
-      this.words.push(new Word(word));
+      this.words.push(new Word(word, this.dictionaryManager));
         // {word: word, definition: '', isGood: true});
     });
 
     if(this.words.length === 0 || values[values.length - 1].length === 0) {
-      this.words.push(new Word(''));
+      this.words.push(new Word('', this.dictionaryManager));
     }
-
 
     // On second thought, maybe we don't want this?
     // // Flip the word they're entering to good
@@ -118,7 +123,8 @@ class Word {
   public definition: string;
   public isGood: boolean;
 
-  constructor(word: string) {
+  constructor(word: string,
+    public dictionaryManager: DictionaryService) {
     // console.log("Constructor called with: " + word);
     this.word = word;
 
@@ -126,5 +132,26 @@ class Word {
     // TODO: EXCEPT in the case word.length === 0
     this.definition = '';
     this.isGood = true;
+
+    this.lookupWord();
+  }
+
+  private async lookupWord() {
+    if(this.word.length === 0) { return; }
+
+    this.dictionaryManager.LookupWord(this.word)
+      .then((r: Array<DictionaryResponse>) => { 
+        console.log(r);
+        // console.log(r[0]);
+        // console.log(r.meanings);
+        // console.log(r.meanings[0].definitions);
+        this.definition = r[0].meanings[0].definitions[0].definition;
+        this.isGood = true;
+      })
+      .catch((err: any) => {
+        this.definition = '';
+        this.isGood = false;
+        console.log(err);
+      });
   }
 }

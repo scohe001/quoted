@@ -3,7 +3,9 @@
 
   <div class="content">
     <div class="words">
-      <span class="word" *ngFor="let word of words">{{word.word}}</span>
+      <span [ngClass]="word.isGood ? 'goodWord' : 'badWord'" class="word" *ngFor="let word of words">
+          {{word.word}}
+      </span>
       <span class="cursor"></span>
     </div>
 
