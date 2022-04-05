@@ -102,6 +102,10 @@ export class WordBoxComponent implements OnInit {
   }
 
   private parseWords(value: string) {
+    // Deep copy
+    let oldWords: Array<Word> = JSON.parse(JSON.stringify(this.words));
+    var newWords: Array<Word>;
+
     this.words = []; // Clear what's already in there
 
     var values: Array<string> = value.split(' ');
@@ -109,9 +113,21 @@ export class WordBoxComponent implements OnInit {
     values.forEach(word => {
       if(word.length === 0) { return; }
 
-      // TODO: Check the dictionary API here
-      this.words.push(new Word(word, this.dictionaryManager));
-        // {word: word, definition: '', isGood: true});
+      var newWord: Word = new Word(word, this.dictionaryManager);
+
+      var oldWord: Word | undefined = oldWords.find((w) => {
+        return w.word === newWord.word;
+      })
+
+      if(oldWord) {
+        newWord.isGood = oldWord.isGood;
+        newWord.definition = oldWord.definition;
+      } else {
+        newWord.lookupWord();
+      }
+
+      this.words.push(newWord);
+      // this.words.push(new Word(word, this.dictionaryManager));
     });
 
     if(this.words.length === 0 || values[values.length - 1].length === 0) {
@@ -137,17 +153,14 @@ export class Word {
     public dictionaryManager: DictionaryService) {
     // console.log("Constructor called with: " + word);
     this.word = word;
-
-    // TODO: Check dictionary API here
-    // TODO: EXCEPT in the case word.length === 0
     this.definition = '';
     this.isGood = true;
-
-    this.lookupWord();
   }
 
-  private async lookupWord() {
+  public async lookupWord() {
     if(this.word.length === 0) { return; }
+
+    // console.log("LOOKING UP: " + this.word);
 
     this.dictionaryManager.LookupWord(this.word)
       .then((r: Array<DictionaryResponse>) => { 
