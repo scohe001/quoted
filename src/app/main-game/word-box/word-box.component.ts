@@ -54,13 +54,12 @@ export class WordBoxComponent implements OnInit {
   ngOnInit(): void {
     this.wordInput = '';
 
-    // TODO: Calc some unique targetScore based on date
-    // targetScore = ???;
-    let wordBoxElem = document.getElementById("wordbox");
-    if(wordBoxElem) {
-      wordBoxElem.focus();
-      wordBoxElem.click();
-    }
+    // Doesn't work to bring up mobile keyboard on load
+    // let wordBoxElem = document.getElementById("wordbox");
+    // if(wordBoxElem) {
+    //   wordBoxElem.focus();
+    //   wordBoxElem.click();
+    // }
   }
 
   public test() {

@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common'
 import { MatButtonModule } from '@angular/material/button';
 import { KeyboardComponent } from './main-game/keyboard/keyboard.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table'
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     FormsModule,
     CommonModule,
     MatDialogModule,
+    MatTableModule,
 
     MatButtonModule,
     HttpClientModule
