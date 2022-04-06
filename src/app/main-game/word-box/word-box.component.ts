@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef, Input } from '@angular/core';
 import { AbstractControl, FormControl, NgControl, NgModel, Validators } from '@angular/forms';
 import { HostListener } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -14,14 +14,9 @@ import { DefinitionDialogue } from './definition-dialogue';
 export class WordBoxComponent implements OnInit {
   
   public score: number = 0;
-  public targetScore: number = 100;
+  @Input() public targetScore: number = 100;
   public textEntered: string = '';
   public words: Array<Word> = []
-  
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
-    console.log(event.key + " pressed");
-  }
 
   public get keyboardText(): string {
     return this.textEntered;
@@ -35,33 +30,17 @@ export class WordBoxComponent implements OnInit {
     return this.textEntered;
   }
 
-  public set wordInput(value: string) {
+  @Input() public set wordInput(value: string) {
     if(value.length >= 2
-      && value[value.length - 1] == value[value.length -2 ]
+      && value[value.length - 1] == value[value.length - 2]
       && value[value.length - 1] === ' ')
       { return; }
 
     this.textEntered = value;
     let lowerWord: string = value.toLowerCase();
     this.parseWords(lowerWord);
-    this.score = 0;
-    for (let index = 0; index < lowerWord.length; index++) {
-      if(!this.isAlpha(lowerWord[index])) { continue; }
 
-      if(this.isVowel(lowerWord[index])) {
-        this.score -= lowerWord[index].charCodeAt(0) - 'a'.charCodeAt(0) + 1;
-      } else {
-        this.score += lowerWord[index].charCodeAt(0) - 'a'.charCodeAt(0) + 1;
-      }
-    }
-  }
-
-  private isAlpha(val: string) {
-    return  "abcdefghijklmnopqrstuvwxyz".includes(val);
-  }
-
-  private isVowel(val: string) {
-    return "aeiou".includes(val);
+    this.score = this.words.reduce((sum, current) => sum + current.score, 0);
   }
 
   wordControl: FormControl = new FormControl('', Validators.required);
@@ -78,20 +57,6 @@ export class WordBoxComponent implements OnInit {
 
   public test() {
     console.log(this.keyboardText);
-  }
-
-  public keyPressed(key: string) {
-    this.wordInput += key;
-  }
-
-  public backspacePressed() {
-    if(this.wordInput.length <= 0) { return; }
-
-    this.wordInput = this.wordInput.substring(0, this.wordInput.length - 1);
-  }
-
-  public clear() {
-    this.wordInput = '';
   }
 
   public wordTap(word: Word) {
@@ -148,6 +113,7 @@ export class Word {
   public word: string;
   public definition: string;
   public isGood: boolean;
+  public score: number;
 
   constructor(word: string,
     public dictionaryManager: DictionaryService) {
@@ -155,6 +121,24 @@ export class Word {
     this.word = word;
     this.definition = '';
     this.isGood = true;
+    this.score = 0;
+
+    this.recalcScore();
+  }
+
+  public recalcScore() {
+    let lowerWord: string = this.word.toLowerCase();
+    this.score = 0;
+
+    for (let index = 0; index < lowerWord.length; index++) {
+      if(!this.isAlpha(lowerWord[index])) { continue; }
+
+      if(this.isVowel(lowerWord[index])) {
+        this.score -= lowerWord[index].charCodeAt(0) - 'a'.charCodeAt(0) + 1;
+      } else {
+        this.score += lowerWord[index].charCodeAt(0) - 'a'.charCodeAt(0) + 1;
+      }
+    }
   }
 
   public async lookupWord() {
@@ -176,5 +160,13 @@ export class Word {
         this.isGood = false;
         console.log(err);
       });
+  }
+
+  private isAlpha(val: string) {
+    return  "abcdefghijklmnopqrstuvwxyz".includes(val);
+  }
+
+  private isVowel(val: string) {
+    return "aeiou".includes(val);
   }
 }

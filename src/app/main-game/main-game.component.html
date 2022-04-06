@@ -1,3 +1,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0"/>
-<app-word-box class="wordbox"></app-word-box>
+<div class="holder">
+
+  <div class="content">
+    <app-word-box [wordInput]="textEntered" [targetScore]="targetScore" class="wordbox"></app-word-box>
+  </div>
+
+  <footer class="footer">
+    <div class="clear">
+        <button mat-flat-button (click)="clear()">Clear</button>
+    </div>
+
+    <div class="keyboard">
+      <app-keyboard (keyPressed)="keyPressed($event)" (backspacePressed)="backspacePressed()"></app-keyboard>
+    </div>
+  </footer>
+
+</div>

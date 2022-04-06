@@ -1,5 +1,69 @@
 
+
 .wordbox {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+}
+
+.holder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+  padding: 10px;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
+.keyboard {
+    margin-bottom: 10px;
+    // Prevent double tap to zoom
+    touch-action: manipulation;
+}
+
+/*
+.words {
+    text-transform: uppercase;
+    font-size: 24px;
+
+    outline: black solid 5px;
+
+    // Flex stuff
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: stretch;
+}
+
+.word {
+    padding: 5px;
+}
+
+.wordbox {
+    width: 100%;
+}
+
+.goodWord {
+    color: black;
+}
+
+.badWord {
+    color: red;
+}
+*/
+
+.score {
+    text-align: center;
+    font-size: 36px;
+    padding-bottom: 36px;
+}
+
+.clear {
+    text-align: right;
+    padding: 10px;
 }

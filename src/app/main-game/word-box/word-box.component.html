@@ -2,16 +2,16 @@
 <div class="holder">
 
   <div class="content">
-    <div class="words">
-      <span *ngFor="let word of words" [ngClass]="word.isGood ? 'goodWord' : 'badWord'" class="word" (click)="wordTap(word)">
-          {{word.word}}
-      </span>
-      <span class="cursor"></span>
-    </div>
+    <!--
+      <div class="words">
+        <span *ngFor="let word of words" [ngClass]="word.isGood ? 'goodWord' : 'badWord'" class="word" (click)="wordTap(word)">
+            {{word.word}}
+        </span>
+        <span class="cursor"></span>
+      </div>
+    -->
 
-    <br>
-
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="wordbox" appearance="fill">
         <mat-label>Put words here</mat-label>
         <input matInput placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput">
     </mat-form-field>
@@ -22,14 +22,6 @@
   <footer class="footer">
     <div class="score">
       <mat-label>{{score}} / {{targetScore}}</mat-label>
-    </div>
-
-    <div class="clear">
-        <button mat-flat-button (click)="clear()">Clear</button>
-    </div>
-
-    <div class="keyboard">
-      <app-keyboard (keyPressed)="keyPressed($event)" (backspacePressed)="backspacePressed()"></app-keyboard>
     </div>
   </footer>
 

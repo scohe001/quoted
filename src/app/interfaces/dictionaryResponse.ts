@@ -76,5 +76,4 @@ export interface Definition {
       ]
     }
   ]
-
 */
