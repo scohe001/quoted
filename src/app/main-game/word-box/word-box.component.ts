@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, NgControl, NgModel, Validators } from '@angular/forms';
 import { HostListener } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -26,10 +26,12 @@ export class WordBoxComponent implements OnInit {
     this.wordInput = value;
   }
 
+
   public get wordInput(): string {
     return this.textEntered;
   }
 
+  @Output() public wordInputChange = new EventEmitter<string>();
   @Input() public set wordInput(value: string) {
     if(value.length >= 2
       && value[value.length - 1] == value[value.length - 2]
@@ -41,6 +43,7 @@ export class WordBoxComponent implements OnInit {
     this.parseWords(lowerWord);
 
     this.score = this.words.reduce((sum, current) => sum + current.score, 0);
+    this.wordInputChange.emit(this.wordInput);
   }
 
   wordControl: FormControl = new FormControl('', Validators.required);
@@ -53,6 +56,10 @@ export class WordBoxComponent implements OnInit {
 
     // TODO: Calc some unique targetScore based on date
     // targetScore = ???;
+    let wordBoxElem = document.getElementById("wordbox");
+    if(wordBoxElem) {
+      wordBoxElem.focus();
+    }
   }
 
   public test() {
