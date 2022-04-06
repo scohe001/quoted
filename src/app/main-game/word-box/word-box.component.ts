@@ -59,6 +59,7 @@ export class WordBoxComponent implements OnInit {
     let wordBoxElem = document.getElementById("wordbox");
     if(wordBoxElem) {
       wordBoxElem.focus();
+      wordBoxElem.click();
     }
   }
 
