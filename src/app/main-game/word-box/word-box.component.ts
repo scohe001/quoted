@@ -96,7 +96,7 @@ export class WordBoxComponent implements OnInit {
       if(oldWord && oldWord.isGood !== WordState.PENDING_INPUT) {
         newWord.isGood = oldWord.isGood;
         newWord.definition = oldWord.definition;
-      } else if (indx + 1 < values.length) {
+      } else if (indx + 1 < values.length || Word.isEndPunctuation(value[value.length - 1])) {
         newWord.lookupWord();
       } else {
         newWord.isGood = WordState.PENDING_INPUT;
@@ -198,5 +198,9 @@ export class Word {
 
   public static isWordChar(val: string) {
     return this.isAlpha(val) || val === "'";
+  }
+
+  public static isEndPunctuation(val: string) {
+    return ".,!?:)".includes(val);
   }
 }
