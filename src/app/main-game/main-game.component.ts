@@ -23,7 +23,7 @@ export class MainGameComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
-    console.log(event.key + " pressed");
+    // console.log(event.key + " pressed");
   }
 
   public keyPressed(key: string) {

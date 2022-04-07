@@ -106,17 +106,7 @@ export class WordBoxComponent implements OnInit {
       this.words.push(newWord);
     });
 
-    if(this.words.length === 0 || values[values.length - 1].length === 0) {
-      this.words.push(new Word('', this.dictionaryManager));
-    }
-
-    // On second thought, maybe we don't want this?
-    // // Flip the word they're entering to good
-    // if(this.words.length > 0) {
-    //   this.words[this.words.length - 1].isGood = true;
-    // }
-
-    console.log("Finishing parse", this.words);
+    // console.log("Finishing parse", this.words);
   }
 
   public rowClicked(word: Word) {
@@ -180,7 +170,7 @@ export class Word {
 
     this.dictionaryManager.LookupWord(this.word)
       .then((r: Array<DictionaryResponse>) => { 
-        console.log(r);
+        // console.log(r);
         // console.log(r[0]);
         // console.log(r.meanings);
         // console.log(r.meanings[0].definitions);
