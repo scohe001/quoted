@@ -16,7 +16,7 @@
         <input matInput placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput" id="wordbox">
     </mat-form-field>
 
-    <div class="tableHolder">
+    <div id="wordTable" class="tableHolder">
       <table mat-table [dataSource]="words" class="mat-elevation-z8 wordtable">
         <!-- Word Column -->
         <ng-container matColumnDef="word">

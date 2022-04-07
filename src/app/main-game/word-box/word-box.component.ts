@@ -106,6 +106,10 @@ export class WordBoxComponent implements OnInit {
       this.words.push(newWord);
     });
 
+    // Scroll the table to the bottom
+    var wordTable  = document.getElementById("wordTable");
+    if(wordTable) { wordTable.scrollTop = wordTable.scrollHeight; }
+
     // console.log("Finishing parse", this.words);
   }
 
