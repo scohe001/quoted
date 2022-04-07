@@ -30,7 +30,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="['word', 'score']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['word', 'score'];"></tr>
+      <tr mat-row (click)="rowClicked(row)" *matRowDef="let row; columns: ['word', 'score'];"></tr>
     </table>
 
 
