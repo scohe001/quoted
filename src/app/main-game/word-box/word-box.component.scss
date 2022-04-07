@@ -49,6 +49,10 @@
     color: red;
 }
 
+.pendingWord {
+    color: yellow;
+}
+
 .score {
     text-align: center;
     font-size: 36px;
@@ -74,3 +78,6 @@
     height: 30px;
 }
 
+.tableRow:active {
+  background-color: dimgray;
+}

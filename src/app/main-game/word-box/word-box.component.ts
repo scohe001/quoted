@@ -127,6 +127,12 @@ export class WordBoxComponent implements OnInit {
       data: word,
     });
   }
+
+  public getWordClass(word: Word) {
+    return word.isGood === WordState.GOOD ? 'goodWord'
+      : word.isGood === WordState.PENDING_INPUT ? 'pendingWord'
+      : 'badWord';
+  }
 }
 
 export enum WordState {
