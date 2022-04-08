@@ -1,7 +1,7 @@
 import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, NgControl, NgModel, Validators } from '@angular/forms';
 import { HostListener } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DictionaryService } from '../../services/dictionary.service'
 import { DictionaryResponse } from '../../interfaces/dictionaryResponse';
 import { DefinitionDialogue } from './definition-dialogue';
@@ -41,8 +41,8 @@ export class WordBoxComponent implements OnInit {
     if(value === this.textEntered) { return; }
 
     this.textEntered = value;
-    let lowerWord: string = value.toLowerCase();
-    this.parseWords(lowerWord);
+    let upperWord: string = value.toUpperCase();
+    this.parseWords(upperWord);
 
     this.score = this.words.reduce((sum, current) => sum + current.score, 0);
     this.wordInputChange.emit(this.wordInput);
@@ -153,16 +153,16 @@ export class Word {
   }
 
   public recalcScore() {
-    let lowerWord: string = this.word.toLowerCase();
+    let upperWord: string = this.word.toUpperCase();
     this.score = 0;
 
-    for (let index = 0; index < lowerWord.length; index++) {
-      if(!Word.isAlpha(lowerWord[index])) { continue; }
+    for (let index = 0; index < upperWord.length; index++) {
+      if(!Word.isAlpha(upperWord[index])) { continue; }
 
-      if(Word.isVowel(lowerWord[index])) {
-        this.score -= lowerWord[index].charCodeAt(0) - 'a'.charCodeAt(0) + 1;
+      if(Word.isVowel(upperWord[index])) {
+        this.score -= upperWord[index].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
       } else {
-        this.score += lowerWord[index].charCodeAt(0) - 'a'.charCodeAt(0) + 1;
+        this.score += upperWord[index].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
       }
     }
   }
@@ -189,11 +189,11 @@ export class Word {
   }
 
   public static isAlpha(val: string) {
-    return  "abcdefghijklmnopqrstuvwxyz".includes(val);
+    return  "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(val);
   }
 
   public static isVowel(val: string) {
-    return "aeiou".includes(val);
+    return "AEIOU".includes(val);
   }
 
   public static isWordChar(val: string) {

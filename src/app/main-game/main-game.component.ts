@@ -1,5 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { CookieService } from '../services/cookie.service';
+import { TutorialDialog } from './tutorial-dialog';
 
 @Component({
   selector: 'app-main-game',
@@ -10,15 +13,25 @@ export class MainGameComponent implements OnInit {
 
   private readonly MIN_TARGET_SCORE: number = 50;
   private readonly MAX_TARGET_SCORE: number = 250;
+  private readonly SHOW_TUTORIAL_COOKIE: string = "SHOW_TUTORIAL_ON_LOAD";
 
   public targetScore: number = 100;
   public textEntered: string = '';
 
-  constructor() { }
+  constructor(public dialog: MatDialog,
+    public cookieManager: CookieService,) {  }
 
   ngOnInit(): void {
     this.targetScore = this.getTodayTarget();
 
+    let tutorialCookieVal = this.cookieManager.getCookie(this.SHOW_TUTORIAL_COOKIE);
+    if(!tutorialCookieVal || tutorialCookieVal === "TRUE") {
+      // this.cookieManager.setCookie(this.SHOW_TUTORIAL_COOKIE, "FALSE", 50);
+      const dialogRef = this.dialog.open(TutorialDialog, {
+        width: '90vw',
+        maxWidth: '600px',
+      });
+    }
   }
 
   @HostListener('document:keydown', ['$event'])
