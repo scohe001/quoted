@@ -18,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { KeyboardComponent } from './main-game/keyboard/keyboard.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table'
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { MatTableModule } from '@angular/material/table'
     CommonModule,
     MatDialogModule,
     MatTableModule,
+    MatToolbarModule,
+    MatIconModule,
 
     MatButtonModule,
     HttpClientModule

@@ -27,10 +27,7 @@ export class MainGameComponent implements OnInit {
     let tutorialCookieVal = this.cookieManager.getCookie(this.SHOW_TUTORIAL_COOKIE);
     if(!tutorialCookieVal || tutorialCookieVal === "TRUE") {
       // this.cookieManager.setCookie(this.SHOW_TUTORIAL_COOKIE, "FALSE", 50);
-      const dialogRef = this.dialog.open(TutorialDialog, {
-        width: '90vw',
-        maxWidth: '600px',
-      });
+      this.showHelp();
     }
   }
 
@@ -51,6 +48,17 @@ export class MainGameComponent implements OnInit {
 
   public clear() {
     this.textEntered = '';
+  }
+
+  public showHelp() {
+    const dialogRef = this.dialog.open(TutorialDialog, {
+      width: '90vw',
+      maxWidth: '600px',
+    });
+  }
+
+  public share() {
+    alert("Imagine this actually shares. Idk.");
   }
 
   private getTodayTarget(): number {

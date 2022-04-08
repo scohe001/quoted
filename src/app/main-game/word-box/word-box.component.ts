@@ -201,6 +201,6 @@ export class Word {
   }
 
   public static isEndPunctuation(val: string) {
-    return ".,!?:)".includes(val);
+    return ".,!?:;)".includes(val);
   }
 }
