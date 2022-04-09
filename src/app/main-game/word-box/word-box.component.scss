@@ -61,7 +61,7 @@
 }
 
 .tableHolder {
-  height: 30vh;
+  height: 27vh;
   overflow: auto;
 }
 
@@ -71,4 +71,10 @@
 
 .tableRow:active {
   background-color: dimgray;
+  height: 35px;
+}
+
+.mat-row {
+    min-height: 35px;
+    height: 35px;
 }
