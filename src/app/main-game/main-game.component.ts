@@ -27,7 +27,7 @@ export class MainGameComponent implements OnInit {
 
     let tutorialCookieVal = this.cookieManager.getCookie(this.SHOW_TUTORIAL_COOKIE);
     if(!tutorialCookieVal || tutorialCookieVal === "TRUE") {
-      // this.cookieManager.setCookie(this.SHOW_TUTORIAL_COOKIE, "FALSE", 50);
+      this.cookieManager.setCookie(this.SHOW_TUTORIAL_COOKIE, "FALSE", 50);
       this.showHelp();
     }
   }
