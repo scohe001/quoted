@@ -1,16 +1,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0"/>
 <div class="holder">
-  <mat-toolbar color="primary" class="header main-toolbar">
-      <div class="header-content">
-        <span class="header-item" (click)="showHelp()">
-          <mat-icon>help_outline</mat-icon>
-        </span>
-        <span class="header-item" (click)="share()">
-          <mat-icon>share</mat-icon>
-        </span>
-      </div>
-   </mat-toolbar>
+  <!--
+    <mat-toolbar color="primary" class="header main-toolbar">
+  -->
+  <!--
+  <mat-toolbar class="header main-toolbar">
+    <div class="header-content">
+      <span class="header-item" (click)="showHelp()">
+        <mat-icon>help_outline</mat-icon>
+      </span>
+      <span class="header-item" (click)="share()">
+        <mat-icon>share</mat-icon>
+      </span>
+    </div>
+  </mat-toolbar>
+  -->
 
   <div class="content">
     <app-word-box [(wordInput)]="textEntered" [targetScore]="targetScore" class="wordbox"></app-word-box>
