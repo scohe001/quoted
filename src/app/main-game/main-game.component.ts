@@ -16,6 +16,7 @@ export class MainGameComponent implements OnInit {
   private readonly SHOW_TUTORIAL_COOKIE: string = "SHOW_TUTORIAL_ON_LOAD";
 
   public targetScore: number = 100;
+  public score: number = 0;
   public textEntered: string = '';
 
   constructor(public dialog: MatDialog,
@@ -59,6 +60,10 @@ export class MainGameComponent implements OnInit {
 
   public share() {
     alert("Imagine this actually shares. Idk.");
+  }
+
+  public scoreChanged(score: number) {
+    this.score = score;
   }
 
   private getTodayTarget(): number {

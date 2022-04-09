@@ -13,9 +13,7 @@ import { DefinitionDialogue } from './definition-dialogue';
 })
 export class WordBoxComponent implements OnInit {
   
-  public score: number = 0;
   @Input() public targetScore: number = 100;
-  public textEntered: string = '';
   public words: Array<Word> = []
 
   public get keyboardText(): string {
@@ -26,12 +24,19 @@ export class WordBoxComponent implements OnInit {
     this.wordInput = value;
   }
 
+  @Output() public scoreChange = new EventEmitter<number>();
+  public _score: number = 0;
+  public set score(value: number) {
+    this._score = value;
+    this.scoreChange.emit(this._score);
+  }
 
-  public get wordInput(): string {
-    return this.textEntered;
+  public get score(): number {
+    return this._score;
   }
 
   @Output() public wordInputChange = new EventEmitter<string>();
+  public textEntered: string = '';
   @Input() public set wordInput(value: string) {
     if(value.length >= 2
       && value[value.length - 1] == value[value.length - 2]
@@ -46,6 +51,10 @@ export class WordBoxComponent implements OnInit {
 
     this.score = this.words.reduce((sum, current) => sum + current.score, 0);
     this.wordInputChange.emit(this.wordInput);
+  }
+
+  public get wordInput(): string {
+    return this.textEntered;
   }
 
   wordControl: FormControl = new FormControl('', Validators.required);
