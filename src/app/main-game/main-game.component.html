@@ -4,18 +4,18 @@
   <!--
     <mat-toolbar color="primary" class="header main-toolbar">
   -->
-  <mat-toolbar class="header main-toolbar">
-    <div class="header-content">
-      <span class="header-item" (click)="showHelp()">
-        <mat-icon>help_outline</mat-icon>
-      </span>
-      <span class="header-item" (click)="share()">
-        <mat-icon>share</mat-icon>
-      </span>
-    </div>
-  </mat-toolbar>
 
   <div class="content">
+    <mat-toolbar class="header main-toolbar">
+      <div class="header-content">
+        <span class="header-item" (click)="showHelp()">
+          <mat-icon>help_outline</mat-icon>
+        </span>
+        <span class="header-item" (click)="share()">
+          <mat-icon>share</mat-icon>
+        </span>
+      </div>
+    </mat-toolbar>
     <app-word-box [(wordInput)]="textEntered" [targetScore]="targetScore" class="wordbox"></app-word-box>
   </div>
 
