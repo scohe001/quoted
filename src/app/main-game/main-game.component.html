@@ -16,13 +16,15 @@
         </span>
       </div>
     </mat-toolbar>
-    <app-word-box [(wordInput)]="textEntered" [targetScore]="targetScore" (scoreChange)="scoreChanged($event)" class="wordbox"></app-word-box>
-  </div>
 
-  <footer class="footer">
+    <app-word-box [(wordInput)]="textEntered" [targetScore]="targetScore" (scoreChange)="scoreChanged($event)" class="wordbox"></app-word-box>
+
     <div class="score">
       <mat-label>{{targetScore - score}}</mat-label>
     </div>
+  </div>
+
+  <footer class="footer">
 
     <div class="clear">
         <button mat-flat-button (click)="clear()">Clear</button>
