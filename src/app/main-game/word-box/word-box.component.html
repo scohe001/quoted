@@ -11,7 +11,7 @@
 
   <mat-form-field class="wordbox" appearance="fill">
       <mat-label>Put words here</mat-label>
-      <input matInput placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput" id="wordbox">
+      <input matInput placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput" id="wordbox" (keydown.enter)="clear()">
   </mat-form-field>
 
   <div id="wordTable" class="tableHolder">

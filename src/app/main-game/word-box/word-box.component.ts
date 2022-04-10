@@ -136,6 +136,10 @@ export class WordBoxComponent implements OnInit {
       : word.isGood === WordState.PENDING_INPUT ? 'pendingWord'
       : 'badWord';
   }
+
+  public clear() {
+    this.wordInput = '';
+  }
 }
 
 export enum WordState {
