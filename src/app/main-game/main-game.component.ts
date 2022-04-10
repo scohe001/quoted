@@ -59,7 +59,21 @@ export class MainGameComponent implements OnInit {
   }
 
   public share() {
-    alert("Imagine this actually shares. Idk.");
+    let shareText: string = "Quoted #69 (" + this.targetScore + ")\n\"" + this.textEntered + "\"";
+
+    if(navigator.share) {
+      navigator.share({
+        title: document.title,
+        text: shareText,
+        url: window.location.href
+      })
+      .then(() => console.log('Successful share'))
+      .catch(error => console.log('Error sharing:', error));
+    } else {
+      navigator.clipboard.writeText(shareText)
+        .then(() => alert("Copied to clipboard."))
+        .catch((reason: any) => console.log("Clipboard copy failed: ", reason));
+    }
   }
 
   public scoreChanged(score: number) {
