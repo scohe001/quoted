@@ -59,13 +59,18 @@ export class MainGameComponent implements OnInit {
   }
 
   public share() {
+    if(this.score !== this.targetScore) {
+      alert("Score must be 0 to share!");
+      return;
+    }
+
     let shareText: string = "Quoted #69 (" + this.targetScore + ")\n\"" + this.textEntered + "\"";
 
     if(navigator.share) {
       navigator.share({
         title: document.title,
         text: shareText,
-        url: window.location.href
+        // url: window.location.href
       })
       .then(() => console.log('Successful share'))
       .catch(error => console.log('Error sharing:', error));
