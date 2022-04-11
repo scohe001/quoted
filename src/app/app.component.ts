@@ -25,6 +25,10 @@ export class AppComponent {
       number: {
         value: 10,
       }
+    },
+    fullScreen: {
+      enable: true,
+      zIndex: 0,
     }
   };
 }
