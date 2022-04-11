@@ -11,7 +11,7 @@ export class DictionaryService {
 
   constructor(private http: HttpClient,) { }
 
-  public async LookupWord(word: string): Promise<Array<DictionaryResponse>> {
+  public async LookupWord(word: string): Promise<Array<DictionaryResponse> | undefined> {
     return await this.http.get<Array<DictionaryResponse>>('https://api.dictionaryapi.dev/api/v2/entries/en/' + word).toPromise();
   }
 }
@@ -78,11 +78,16 @@ export class Word {
     if(this.word.length === 0 || !this.shouldLookupWords()) { return; }
 
     this.dictionaryManager.LookupWord(this.word)
-      .then((r: Array<DictionaryResponse>) => { 
+      .then((r: Array<DictionaryResponse> | undefined) => { 
         // console.log(r);
         // console.log(r[0]);
         // console.log(r.meanings);
         // console.log(r.meanings[0].definitions);
+        if(!r) {
+          this.definition = 'Word not found.';
+          this.isGood = WordState.DEF_NOT_FOUND;
+          return;
+        }
         this.definition = r[0].meanings[0].definitions[0].definition;
         this.isGood = WordState.GOOD;
       })

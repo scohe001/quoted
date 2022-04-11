@@ -6,5 +6,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'word-golf';
+  title = 'quoted';
+
+  options = {
+    fpsLimit: 60,
+    particles: {
+      color: {
+        value: "#8c8c8c"
+      },
+      links: {
+        enable: true,
+        color: "#a8a8a8",
+        distance: 150,
+      },
+      move: {
+        enable: true
+      },
+      number: {
+        value: 10,
+      }
+    }
+  };
 }

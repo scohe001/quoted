@@ -20,6 +20,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatIconModule } from '@angular/material/icon'
+import { NgParticlesComponent, NgParticlesModule } from 'ng-particles';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MatIconModule } from '@angular/material/icon'
     MatIconModule,
 
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    NgParticlesModule,
   ],
   providers: [
     {
