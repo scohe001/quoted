@@ -81,7 +81,7 @@ export class WordBoxComponent implements OnInit {
 
   private parseWords(value: string) {
     // Deep copy
-    let oldWords: Array<Word> = JSON.parse(JSON.stringify(this.words));
+    let oldWords: Array<Word> = this.words.map(word => word.deepCopy());
 
     this.words = []; // Clear what's already in there
 

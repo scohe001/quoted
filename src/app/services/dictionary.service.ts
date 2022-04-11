@@ -65,6 +65,15 @@ export class Word {
     }
   }
 
+  public deepCopy(): Word {
+    var word: Word = new Word(this.word, this.dictionaryManager, this.languageManager);
+    word.isGood = this.isGood;
+    word.score = this.score;
+    word.definition = this.definition;
+
+    return word;
+  }
+
   public async lookupWord() {
     if(this.word.length === 0 || !this.shouldLookupWords()) { return; }
 
