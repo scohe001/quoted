@@ -34,9 +34,10 @@ export class Word {
 
     this.word = word;
     this.definition = '';
-    this.isGood = WordState.PENDING_INPUT;
+    this.isGood = WordState.PENDING_INPUT; // Need this for TS to be happy but it'll get overwritten below
     this.score = 0;
 
+    this.setPendingState();
     this.recalcScore();
   }
 
