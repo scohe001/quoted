@@ -27,7 +27,7 @@ export class AppComponent {
       }
     },
     fullScreen: {
-      enable: true,
+      enable: false,
       zIndex: 0,
     }
   };

@@ -10,9 +10,9 @@ export class Portuguese implements iLanguage {
     public lookupsNotSupported: string = "(P) Lookups and definitions not supported for non-English languages.";
 
     // Help page
-    public goal: string = "(P) Reach today's target by forming an English sentence!";
+    public goal: string = "Atinja a meta de hoje formando uma frase em Português.";
     public scoring: string = "(P) Scoring";
-    public alphaVal: string = "(P) Each letter has a value based on its sequence in the alphabet.";
+    public alphaVal: string = "Cada letra tem um valor baseado em sua sequência no alfabeto.";
     public vowels: string = "(P) Vowels* have negative values.";
     public yException: string = "(P) *Y is always counted as a consanant";
     public example: string = "(P) Example";

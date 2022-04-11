@@ -2,3 +2,9 @@
     background-color: slategray;
     height: 100%;
 }
+
+.particles {
+    position: absolute;
+    height: 100%;
+    pointer-events: none;
+}
