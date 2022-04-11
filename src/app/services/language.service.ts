@@ -6,8 +6,8 @@ import { English } from './languages/english';
 import { Portuguese } from './languages/portuguese';
 
 export enum Language {
-  English,
-  Portuguese
+  English = "en",
+  Portuguese = "pt",
 }
 
 @Injectable({
@@ -38,9 +38,19 @@ export class LanguageService {
     return LanguageService.langOptions.get(LanguageService.defaultLang) ?? English.Instance;
   }
 
-  public setLanguage(lang: Language): void {
-    this.selectedLang = lang;
+  public setLanguage(lang: Language | string): void {
+    if(lang && getEnumKeyByEnumValue(Language, lang)) {
+      this.selectedLang = <Language>lang;
+    } else {
+      this.selectedLang = LanguageService.defaultLang;
+    }
+
     // Let everyone know to recalc all bindings
     this.languageChangedEmitter.emit();
   }
+}
+
+function getEnumKeyByEnumValue<T extends {[index:string]:string}>(myEnum:T, enumValue:string):keyof T|null {
+  let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
+  return keys.length > 0 ? keys[0] : null;
 }

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from '../services/cookie.service';
 import { TutorialDialog } from './tutorial-dialog';
 import { Language, LanguageService } from '../services/language.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-game',
@@ -22,7 +23,8 @@ export class MainGameComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
     public cookieManager: CookieService,
-    public languageManager: LanguageService) {  }
+    public languageManager: LanguageService,
+    private route: ActivatedRoute,) {  }
 
   ngOnInit(): void {
     this.targetScore = this.getTodayTarget();
@@ -32,6 +34,9 @@ export class MainGameComponent implements OnInit {
       this.cookieManager.setCookie(this.SHOW_TUTORIAL_COOKIE, "FALSE", 50);
       this.showHelp();
     }
+
+    let langCode: string = this.route.snapshot.paramMap.get('langCode') ?? '';
+    this.languageManager.setLanguage(langCode);
 
     // For testing
     this.languageManager.languageChangedEmitter.subscribe(() => {

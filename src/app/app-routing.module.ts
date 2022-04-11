@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainGameComponent } from './main-game/main-game.component';
 
 const routes: Routes = [
-  { path: '**', component: MainGameComponent }
+  { path: 'lang/:langCode', component: MainGameComponent },
+  // { path: '', redirectTo: 'lang/en', component: MainGameComponent },
+  { path: '**', component: MainGameComponent },
 ];
 
 @NgModule({
