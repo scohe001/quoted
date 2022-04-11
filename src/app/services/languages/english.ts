@@ -7,6 +7,7 @@ export class English implements iLanguage {
     public putWordsHere: string = "Put words here";
     public exText: string = "Ex. Quoted";
     public mustBeZero: string = "Score must be 0 to share!";
+    public lookupsNotSupported: string = "Lookups and definitions not supported for non-English languages.";
 
     // Help page
     public goal: string = "Reach today's target by forming an English sentence!";

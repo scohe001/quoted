@@ -5,6 +5,7 @@ export interface iLanguage {
     putWordsHere: string;
     exText: string;
     mustBeZero: string;
+    lookupsNotSupported: string;
 
     // Help page
     goal: string;

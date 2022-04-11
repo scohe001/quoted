@@ -2,7 +2,7 @@ import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef, Input, Output, Eve
 import { AbstractControl, FormControl, NgControl, NgModel, Validators } from '@angular/forms';
 import { HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DictionaryService } from '../../services/dictionary.service'
+import { DictionaryService, Word, WordState } from '../../services/dictionary.service'
 import { DictionaryResponse } from '../../interfaces/dictionaryResponse';
 import { DefinitionDialogue } from './definition-dialogue';
 import { LanguageService } from '../../services/language.service';
@@ -91,7 +91,7 @@ export class WordBoxComponent implements OnInit {
       word = word.split('').reduce((finalWord, currLetter) => finalWord += Word.isWordChar(currLetter) ? currLetter : '', '');
       if(word.length === 0) { return; }
 
-      var newWord: Word = new Word(word, this.dictionaryManager);
+      var newWord: Word = new Word(word, this.dictionaryManager, this.languageManager);
 
       var oldWord: Word | undefined = oldWords.find((w) => {
         return w.word === newWord.word;
@@ -103,8 +103,7 @@ export class WordBoxComponent implements OnInit {
       } else if (indx + 1 < values.length || Word.isEndPunctuation(value[value.length - 1])) {
         newWord.lookupWord();
       } else {
-        newWord.isGood = WordState.PENDING_INPUT;
-        newWord.definition = "Waiting for input to end. Add a space to force a lookup operation.";
+        newWord.setPendingState();
       }
 
       this.words.push(newWord);
@@ -134,81 +133,5 @@ export class WordBoxComponent implements OnInit {
 
   public clear() {
     this.wordInput = '';
-  }
-}
-
-export enum WordState {
-  GOOD,
-  DEF_NOT_FOUND,
-  PENDING_INPUT,
-}
-
-export class Word {
-  public word: string;
-  public definition: string;
-  public isGood: WordState;
-  public score: number;
-
-  constructor(word: string,
-    public dictionaryManager: DictionaryService) {
-    // console.log("Constructor called with: " + word);
-    this.word = word;
-    this.definition = '';
-    this.isGood = WordState.PENDING_INPUT;
-    this.score = 0;
-
-    this.recalcScore();
-  }
-
-  public recalcScore() {
-    let upperWord: string = this.word.toUpperCase();
-    this.score = 0;
-
-    for (let index = 0; index < upperWord.length; index++) {
-      if(!Word.isAlpha(upperWord[index])) { continue; }
-
-      if(Word.isVowel(upperWord[index])) {
-        this.score -= upperWord[index].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-      } else {
-        this.score += upperWord[index].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-      }
-    }
-  }
-
-  public async lookupWord() {
-    if(this.word.length === 0) { return; }
-
-    // console.log("LOOKING UP: " + this.word);
-
-    this.dictionaryManager.LookupWord(this.word)
-      .then((r: Array<DictionaryResponse>) => { 
-        // console.log(r);
-        // console.log(r[0]);
-        // console.log(r.meanings);
-        // console.log(r.meanings[0].definitions);
-        this.definition = r[0].meanings[0].definitions[0].definition;
-        this.isGood = WordState.GOOD;
-      })
-      .catch((err: any) => {
-        this.definition = 'Word not found.';
-        this.isGood = WordState.DEF_NOT_FOUND;
-        console.log(err);
-      });
-  }
-
-  public static isAlpha(val: string) {
-    return  "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(val);
-  }
-
-  public static isVowel(val: string) {
-    return "AEIOU".includes(val);
-  }
-
-  public static isWordChar(val: string) {
-    return this.isAlpha(val) || val === "'";
-  }
-
-  public static isEndPunctuation(val: string) {
-    return ".,!?:;)".includes(val);
   }
 }

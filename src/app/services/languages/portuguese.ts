@@ -7,6 +7,7 @@ export class Portuguese implements iLanguage {
     public putWordsHere: string = "(P) Put words here";
     public exText: string = "(P) Ex. Quoted";
     public mustBeZero: string = "(P) Score must be 0 to share!";
+    public lookupsNotSupported: string = "(P) Lookups and definitions not supported for non-English languages.";
 
     // Help page
     public goal: string = "(P) Reach today's target by forming an English sentence!";
