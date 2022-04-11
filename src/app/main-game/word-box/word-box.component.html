@@ -10,15 +10,15 @@
   -->
 
   <mat-form-field class="wordbox" appearance="fill">
-      <mat-label>Put words here</mat-label>
-      <input matInput placeholder="Ex. Pizza" class="inputs" [(ngModel)]="wordInput" id="wordbox" (keydown.enter)="clear()">
+      <mat-label>{{languageManager.Language.putWordsHere}}</mat-label>
+      <input matInput placeholder="{{languageManager.Language.exText}}" class="inputs" [(ngModel)]="wordInput" id="wordbox" (keydown.enter)="clear()">
   </mat-form-field>
 
   <div id="wordTable" class="tableHolder">
     <table mat-table [dataSource]="words" class="mat-elevation-z8 wordtable">
       <!-- Word Column -->
       <ng-container matColumnDef="word">
-        <th mat-header-cell *matHeaderCellDef> Word </th>
+        <th mat-header-cell *matHeaderCellDef>{{languageManager.Language.word}}</th>
         <td mat-cell *matCellDef="let element" [ngClass]="getWordClass(element)">
           {{element.word}}
         </td>
@@ -26,7 +26,7 @@
 
       <!-- Score Column -->
       <ng-container matColumnDef="score">
-        <th mat-header-cell *matHeaderCellDef> Score </th>
+        <th mat-header-cell *matHeaderCellDef>{{languageManager.Language.score}}</th>
         <td mat-cell *matCellDef="let element"> {{element.score}} </td>
       </ng-container>
 

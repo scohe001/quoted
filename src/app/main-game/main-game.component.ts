@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from '../services/cookie.service';
 import { TutorialDialog } from './tutorial-dialog';
+import { Language, LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-main-game',
@@ -20,7 +21,8 @@ export class MainGameComponent implements OnInit {
   public textEntered: string = '';
 
   constructor(public dialog: MatDialog,
-    public cookieManager: CookieService,) {  }
+    public cookieManager: CookieService,
+    public languageManager: LanguageService) {  }
 
   ngOnInit(): void {
     this.targetScore = this.getTodayTarget();
@@ -30,6 +32,11 @@ export class MainGameComponent implements OnInit {
       this.cookieManager.setCookie(this.SHOW_TUTORIAL_COOKIE, "FALSE", 50);
       this.showHelp();
     }
+
+    // For testing
+    this.languageManager.languageChangedEmitter.subscribe(() => {
+      console.log("Language changed!");
+    });
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -60,11 +67,11 @@ export class MainGameComponent implements OnInit {
 
   public share() {
     if(this.score !== this.targetScore) {
-      alert("Score must be 0 to share!");
+      alert(this.languageManager.Language.mustBeZero);
       return;
     }
 
-    let shareText: string = "Quoted #69 (" + this.targetScore + ")\n\"" + this.textEntered + "\"";
+    let shareText: string = "Quoted #69 (" + this.targetScore + ")\n\"" + this.textEntered.trim() + "\"";
 
     if(navigator.share) {
       navigator.share({
@@ -109,6 +116,14 @@ export class MainGameComponent implements OnInit {
         h = Math.imul(h ^ (h >>> 16), 2246822507);
         h = Math.imul(h ^ (h >>> 13), 3266489909);
         return (h ^= h >>> 16) >>> 0;
+    }
+  }
+
+  public test() {
+    if(this.languageManager.selectedLang === Language.English) {
+      this.languageManager.setLanguage(Language.Portuguese);
+    } else {
+      this.languageManager.setLanguage(Language.English);
     }
   }
 

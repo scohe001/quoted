@@ -25,12 +25,16 @@
     <div class="score">
       <mat-label>{{targetScore - score}}</mat-label>
     </div>
+
+    <div>
+      <button (click)="test()">Switch lang</button>
+    </div>
   </div>
 
   <footer class="footer">
 
     <div class="clear">
-        <button mat-flat-button (click)="clear()">Clear</button>
+        <button mat-flat-button (click)="clear()">{{languageManager.Language.clear}}</button>
     </div>
 
     <!--

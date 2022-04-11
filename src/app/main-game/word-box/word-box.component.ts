@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DictionaryService } from '../../services/dictionary.service'
 import { DictionaryResponse } from '../../interfaces/dictionaryResponse';
 import { DefinitionDialogue } from './definition-dialogue';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-word-box',
@@ -12,6 +13,16 @@ import { DefinitionDialogue } from './definition-dialogue';
   styleUrls: ['./word-box.component.scss']
 })
 export class WordBoxComponent implements OnInit {
+
+  wordControl: FormControl = new FormControl('', Validators.required);
+
+  constructor(public dictionaryManager: DictionaryService,
+    public dialog: MatDialog,
+    public languageManager: LanguageService) {  }
+
+  ngOnInit(): void {
+    this.wordInput = '';
+  }
   
   @Input() public targetScore: number = 100;
   public words: Array<Word> = []
@@ -55,22 +66,6 @@ export class WordBoxComponent implements OnInit {
 
   public get wordInput(): string {
     return this.textEntered;
-  }
-
-  wordControl: FormControl = new FormControl('', Validators.required);
-
-  constructor(public dictionaryManager: DictionaryService,
-    public dialog: MatDialog) {  }
-
-  ngOnInit(): void {
-    this.wordInput = '';
-
-    // Doesn't work to bring up mobile keyboard on load
-    // let wordBoxElem = document.getElementById("wordbox");
-    // if(wordBoxElem) {
-    //   wordBoxElem.focus();
-    //   wordBoxElem.click();
-    // }
   }
 
   public test() {

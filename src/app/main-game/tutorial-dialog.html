@@ -2,21 +2,21 @@
 <h1 mat-dialog-title class="title">Tutorial</h1>
 -->
 <div mat-dialog-content>
-  <p>Reach today's target by forming an English sentence!</p>
+  <p>{{languageManager.Language.goal}}</p>
 
   <hr>
 
-  <h3>Scoring</h3>
+  <h3>{{languageManager.Language.scoring}}</h3>
 
-  <p>Each letter has a value based on its sequence in the alphabet.</p>
+  <p>{{languageManager.Language.alphaVal}}</p>
 
-  <p>Vowels* have negative values.</p>
+  <p>{{languageManager.Language.vowels}}</p>
   
-  <p><sup><sup>*Y is always counted as a consanant</sup></sup></p>
+  <p><sup><sup>{{languageManager.Language.yException}}</sup></sup></p>
 
   <hr>
 
-  <h3>Example</h3>
+  <h3>{{languageManager.Language.example}}</h3>
 
   <p>(Fancy graphic here)</p>
 
