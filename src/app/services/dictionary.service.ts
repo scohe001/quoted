@@ -45,12 +45,14 @@ export class Word {
     this.score = 0;
 
     for (let index = 0; index < upperWord.length; index++) {
-      if(!Word.isAlpha(upperWord[index])) { continue; }
+      let char: string = Word.stripAccents(upperWord[index]);
 
-      if(Word.isVowel(upperWord[index])) {
-        this.score -= upperWord[index].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+      if(!Word.isAlpha(char)) { continue; }
+
+      if(Word.isVowel(char)) {
+        this.score -= char.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
       } else {
-        this.score += upperWord[index].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        this.score += char.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
       }
     }
   }
@@ -103,19 +105,26 @@ export class Word {
     return this.languageManager.Language === this.languageManager.DefaultLanguage;
   }
 
-  public static isAlpha(val: string) {
+  public static stripAccents(val: string): string {
+    return val.normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  }
+
+  // Should we count this in the score?
+  public static isAlpha(val: string): boolean {
     return  "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(val);
   }
 
-  public static isVowel(val: string) {
+  public static isVowel(val: string): boolean {
     return "AEIOU".includes(val);
   }
 
-  public static isWordChar(val: string) {
-    return this.isAlpha(val) || val === "'";
+  // Should we leave it in what we display?
+  // NOT used for scoring
+  public static isWordChar(val: string): boolean {
+    return this.isAlpha(this.stripAccents(val)) || val === "'";
   }
 
-  public static isEndPunctuation(val: string) {
+  public static isEndPunctuation(val: string): boolean {
     return ".,!?:;)".includes(val);
   }
 }
