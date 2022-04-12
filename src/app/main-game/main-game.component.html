@@ -23,6 +23,13 @@
     <app-word-box [(wordInput)]="textEntered" [targetScore]="targetScore" (scoreChange)="scoreChanged($event)" class="wordbox"></app-word-box>
 
     <div class="score">
+      <div *ngIf="showWinParticles" class="win-particles-box">
+        <div class="win-particles-cover"></div>
+        <div class="particle-holder">
+          <Particles id="tsparticles" [options]="particleOptions"></Particles>
+        </div>
+
+      </div>
       <mat-label>{{targetScore - score}}</mat-label>
     </div>
   </div>

@@ -5,6 +5,8 @@ import { CookieService } from '../services/cookie.service';
 import { TutorialDialog } from './tutorial-dialog';
 import { Language, LanguageService } from '../services/language.service';
 import { ActivatedRoute } from '@angular/router';
+import { MoveDirection, OutMode, SizeMode, ShapeType, getRangeValue, RotateDirection } from 'tsparticles-engine';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-main-game',
@@ -19,7 +21,16 @@ export class MainGameComponent implements OnInit {
 
   public targetScore: number = 100;
   public score: number = 0;
-  public textEntered: string = '';
+  public showWinParticles: boolean = false;
+
+  private _textEntered: string = '';
+  public get textEntered(): string {
+    return this._textEntered;
+  }
+  public set textEntered(text: string) {
+    this._textEntered = text;
+    this.maybeShowWinParticles();
+  }
 
   constructor(public dialog: MatDialog,
     public cookieManager: CookieService,
@@ -124,6 +135,27 @@ export class MainGameComponent implements OnInit {
     }
   }
 
+  private winTimeout: any = null;
+  private maybeShowWinParticles(): void {
+    if(this.winTimeout) {
+      // We're still checking a win, so cancel that
+      clearTimeout(this.winTimeout);
+    }
+
+    if(this.score !== this.targetScore) {
+      this.showWinParticles = false;
+      return;
+    }
+
+    this.winTimeout = setTimeout(() => {
+      // If this is still true after the wait, then show win
+      if(this.score === this.targetScore) {
+        this.showWinParticles = true;
+      }
+      this.winTimeout = null;
+    }, 1000);
+  }
+
   public test() {
     if(this.languageManager.selectedLang === Language.English) {
       this.languageManager.setLanguage(Language.Portuguese);
@@ -131,5 +163,95 @@ export class MainGameComponent implements OnInit {
       this.languageManager.setLanguage(Language.English);
     }
   }
+
+  public particleOptions = {
+    fpsLimit: 60,
+    // Default particles (we don't want since we're just using emitter)
+    particles: {
+      number: {
+        value: 0
+      }
+    },
+
+    emitters: {
+      direction: MoveDirection.none,
+      position: { "x": 50, "y": 50 },
+      size: {
+        width: 50,
+        height: 50,
+        mode: SizeMode.precise,
+      },
+      rate: {
+        quantity: 1,
+        delay: .1,
+      },
+
+      particles: {
+        color: {
+          value: ["#06070E", "#29524A", "#94A187", "#C5AFA0", "#E9BCB7"],
+	        animation: {
+            h: {
+              count: 0,
+              enable: true,
+              offset: 0,
+              speed: 30,
+              sync: true
+            },
+            s: {
+              enable: false,
+            },
+            l: {
+              enable: false,
+            },
+          }
+        },
+        links: {
+          enable: false,
+          color: "#a8a8a8",
+          distance: 150,
+        },
+        move: {
+          enable: true,
+          outModes: OutMode.destroy,
+        },
+        rotate: {
+          direction: RotateDirection.random,
+          value: {
+            min: -180,
+            max: 180,
+          },
+          animation: {
+            enable: true,
+            speed: 3,
+            sync: false,
+          },
+        },
+        shape: {
+          type: ShapeType.char,
+          "character": {
+            "value": "abcdefghijklmnopqrstuvwxyz".split(''),
+          },
+        },
+        size: {
+          value: 10,
+        },
+        wobble: {
+          enable: true,
+          distance: {
+            min: -30,
+            max: 30,
+          },
+          speed: {
+            min: -15,
+            max: 15,
+          }
+        },
+      },
+      fullScreen: {
+        enable: false,
+        zIndex: 0,
+      },
+    }
+  };
 
 }

@@ -65,3 +65,33 @@
     font-family: 'Nanum Myeongjo', serif;
     pointer-events: none;
 }
+
+.win-particles-box {
+    position: absolute;
+    pointer-events: none;
+    width: 200px;
+    height: 150px;
+    margin: auto;
+    transform: translateX(-50%) translateY(-40%);
+    left: 50%;
+    z-index: 200;
+    // For testing
+    // border: 3px solid black;
+}
+
+.win-particles-cover {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    margin-top: 50%;
+    transform: translateY(-90%);
+    z-index: 300;
+    // For testing
+    // border: 3px solid red;
+}
+
+.particle-holder {
+    width: 200px;
+    height: 150px;
+    transform: translateY(-103%);
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OutMode } from 'tsparticles-engine';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'quoted';
 
-  options = {
+
+  public options = {
     fpsLimit: 60,
     particles: {
       color: {
@@ -20,7 +22,8 @@ export class AppComponent {
         distance: 150,
       },
       move: {
-        enable: true
+        enable: true,
+        outModes: OutMode.bounce
       },
       number: {
         value: 10,
