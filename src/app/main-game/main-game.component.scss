@@ -27,7 +27,6 @@
 
 .score {
     text-align: center;
-    font-size: 36px;
     padding-bottom: 36px;
 }
 
@@ -72,7 +71,7 @@
     width: 200px;
     height: 150px;
     margin: auto;
-    transform: translateX(-50%) translateY(-40%);
+    transform: translateX(-50%) translateY(-35%);
     left: 50%;
     z-index: 200;
     // For testing

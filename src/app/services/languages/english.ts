@@ -13,7 +13,7 @@ export class English implements iLanguage {
     public goal: string = "Reach today's target by forming an English sentence!";
     public scoring: string = "Scoring";
     public alphaVal: string = "Each letter has a value based on its sequence in the alphabet.";
-    public vowels: string = "Vowels* have negative values.";
+    public vowels: string = "Consonants are negative - vowels* are positive.";
     public yException: string = "*Y is always counted as a consanant";
     public example: string = "Example";
 

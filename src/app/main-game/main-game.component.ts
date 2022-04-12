@@ -5,8 +5,7 @@ import { CookieService } from '../services/cookie.service';
 import { TutorialDialog } from './tutorial-dialog';
 import { Language, LanguageService } from '../services/language.service';
 import { ActivatedRoute } from '@angular/router';
-import { MoveDirection, OutMode, SizeMode, ShapeType, getRangeValue, RotateDirection } from 'tsparticles-engine';
-import { timeout } from 'rxjs';
+import { MoveDirection, OutMode, SizeMode, ShapeType, RotateDirection } from 'tsparticles-engine';
 
 @Component({
   selector: 'app-main-game',
@@ -22,6 +21,7 @@ export class MainGameComponent implements OnInit {
   public targetScore: number = 100;
   public score: number = 0;
   public showWinParticles: boolean = false;
+  public scoreSize: number = 16;
 
   private _textEntered: string = '';
   public get textEntered(): string {
@@ -106,6 +106,16 @@ export class MainGameComponent implements OnInit {
 
   public scoreChanged(score: number) {
     this.score = score;
+    this.updateScoreSize();
+  }
+
+  readonly MAX_SCORE_SIZE: number = 48;
+  readonly MIN_SCORE_SIZE: number = 16;
+
+  private updateScoreSize(): void {
+    let percentToTarget: number = (Math.abs(this.score - this.targetScore) / this.targetScore);
+    var newSize: number = (Math.min(percentToTarget, 1) * (this.MIN_SCORE_SIZE - this.MAX_SCORE_SIZE)) + this.MAX_SCORE_SIZE;
+    this.scoreSize = Math.round(newSize);
   }
 
   private getTodayTarget(): number {

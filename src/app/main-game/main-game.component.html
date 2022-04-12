@@ -22,7 +22,7 @@
 
     <app-word-box [(wordInput)]="textEntered" [targetScore]="targetScore" (scoreChange)="scoreChanged($event)" class="wordbox"></app-word-box>
 
-    <div class="score">
+    <div class="score" [style.font-size]="scoreSize + 'px'">
       <div *ngIf="showWinParticles" class="win-particles-box">
         <div class="win-particles-cover"></div>
         <div class="particle-holder">
