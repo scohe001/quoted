@@ -5,7 +5,7 @@ import { CookieService } from '../services/cookie.service';
 import { TutorialDialog } from './tutorial-dialog';
 import { Language, LanguageService } from '../services/language.service';
 import { ActivatedRoute } from '@angular/router';
-import { MoveDirection, OutMode, SizeMode, ShapeType, RotateDirection } from 'tsparticles-engine';
+import { MoveDirection, OutMode, SizeMode, ShapeType, RotateDirection, TiltDirection } from 'tsparticles-engine';
 
 @Component({
   selector: 'app-main-game',
@@ -17,6 +17,8 @@ export class MainGameComponent implements OnInit {
   private readonly MIN_TARGET_SCORE: number = 50;
   private readonly MAX_TARGET_SCORE: number = 250;
   private readonly SHOW_TUTORIAL_COOKIE: string = "SHOW_TUTORIAL_ON_LOAD";
+  private readonly STARTING_DATE: Date = new Date(2022, 3, 22); // 04/22/22
+  private readonly CHALLENGE_NUM: Number = Math.ceil(Math.abs((new Date()).getTime() - this.STARTING_DATE.getTime()) / (1000 * 3600 * 24));
 
   public targetScore: number = 100;
   public score: number = 0;
@@ -87,7 +89,7 @@ export class MainGameComponent implements OnInit {
       return;
     }
 
-    let shareText: string = "Quoted #69 (" + this.targetScore + ")\n\"" + this.textEntered.trim() + "\"";
+    let shareText: string = "Quoted #" + this.CHALLENGE_NUM + " (" + this.targetScore + ")\n\"" + this.textEntered.trim() + "\"";
 
     if(navigator.share) {
       navigator.share({
@@ -125,11 +127,11 @@ export class MainGameComponent implements OnInit {
 
     let randVal: number = this.xmur3(dateHash)();
 
-    console.log(randVal);
+    // console.log(randVal);
     let randThousand: number = +randVal.toString().slice(randVal.toString().length - 4);
-    console.log(randThousand);
+    // console.log(randThousand);
     let todayTarget: number = ((randThousand / 10000) * (this.MAX_TARGET_SCORE - this.MIN_TARGET_SCORE)) + this.MIN_TARGET_SCORE;
-    console.log(todayTarget);
+    // console.log(todayTarget);
 
     return Math.round(todayTarget);
   }
