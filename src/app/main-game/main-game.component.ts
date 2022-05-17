@@ -7,6 +7,7 @@ import { Language, LanguageService } from '../services/language.service';
 import { ActivatedRoute } from '@angular/router';
 import { DictionaryService } from '../services/dictionary.service';
 import { HandicapDialog } from './handicap-dialog';
+import { winParticles } from '../services/particle-configs/win'
 
 @Component({
   selector: 'app-main-game',
@@ -24,6 +25,7 @@ export class MainGameComponent implements OnInit {
   public targetScore: number = 100;
   public score: number = 0;
   public showWinParticles: boolean = false;
+  public particleOptions = winParticles;
   public scoreSize: number = 16;
 
   private _textEntered: string = '';
