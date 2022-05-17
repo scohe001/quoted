@@ -5,7 +5,8 @@ import { CookieService } from '../services/cookie.service';
 import { TutorialDialog } from './tutorial-dialog';
 import { Language, LanguageService } from '../services/language.service';
 import { ActivatedRoute } from '@angular/router';
-import { MoveDirection, OutMode, SizeMode, ShapeType, RotateDirection, TiltDirection } from 'tsparticles-engine';
+import { DictionaryService } from '../services/dictionary.service';
+import { HandicapDialog } from './handicap-dialog';
 
 @Component({
   selector: 'app-main-game',
@@ -37,19 +38,23 @@ export class MainGameComponent implements OnInit {
   constructor(public dialog: MatDialog,
     public cookieManager: CookieService,
     public languageManager: LanguageService,
+    public dictionaryManager: DictionaryService,
     private route: ActivatedRoute,) {  }
 
   ngOnInit(): void {
+    // Set target score
     this.targetScore = this.getTodayTarget();
 
+    // Setup language
+    let langCode: string = this.route.snapshot.paramMap.get('langCode') ?? '';
+    this.languageManager.setLanguage(langCode);
+
+    // Show help or nah
     let tutorialCookieVal = this.cookieManager.getCookie(this.SHOW_TUTORIAL_COOKIE);
     if(!tutorialCookieVal || tutorialCookieVal === "TRUE") {
       this.cookieManager.setCookie(this.SHOW_TUTORIAL_COOKIE, "FALSE", 50);
       this.showHelp();
     }
-
-    let langCode: string = this.route.snapshot.paramMap.get('langCode') ?? '';
-    this.languageManager.setLanguage(langCode);
 
     // For testing
     this.languageManager.languageChangedEmitter.subscribe(() => {
@@ -80,6 +85,14 @@ export class MainGameComponent implements OnInit {
     const dialogRef = this.dialog.open(TutorialDialog, {
       width: '90vw',
       maxWidth: '600px',
+    });
+  }
+
+  public showHandicap() {
+    const dialogRef = this.dialog.open(HandicapDialog, {
+      width: '90vw',
+      maxWidth: '600px',
+      data: this.dictionaryManager.getWordsWithScore(this.targetScore - this.score),
     });
   }
 
@@ -175,95 +188,5 @@ export class MainGameComponent implements OnInit {
       this.languageManager.setLanguage(Language.English);
     }
   }
-
-  public particleOptions = {
-    fpsLimit: 60,
-    // Default particles (we don't want since we're just using emitter)
-    particles: {
-      number: {
-        value: 0
-      }
-    },
-
-    emitters: {
-      direction: MoveDirection.none,
-      position: { "x": 50, "y": 50 },
-      size: {
-        width: 50,
-        height: 50,
-        mode: SizeMode.precise,
-      },
-      rate: {
-        quantity: 1,
-        delay: .1,
-      },
-
-      particles: {
-        color: {
-          value: ["#06070E", "#29524A", "#94A187", "#C5AFA0", "#E9BCB7"],
-	        animation: {
-            h: {
-              count: 0,
-              enable: true,
-              offset: 0,
-              speed: 30,
-              sync: true
-            },
-            s: {
-              enable: false,
-            },
-            l: {
-              enable: false,
-            },
-          }
-        },
-        links: {
-          enable: false,
-          color: "#a8a8a8",
-          distance: 150,
-        },
-        move: {
-          enable: true,
-          outModes: OutMode.destroy,
-        },
-        rotate: {
-          direction: RotateDirection.random,
-          value: {
-            min: -180,
-            max: 180,
-          },
-          animation: {
-            enable: true,
-            speed: 3,
-            sync: false,
-          },
-        },
-        shape: {
-          type: ShapeType.char,
-          "character": {
-            "value": "abcdefghijklmnopqrstuvwxyz".split(''),
-          },
-        },
-        size: {
-          value: 10,
-        },
-        wobble: {
-          enable: true,
-          distance: {
-            min: -30,
-            max: 30,
-          },
-          speed: {
-            min: -15,
-            max: 15,
-          }
-        },
-      },
-      fullScreen: {
-        enable: false,
-        zIndex: 0,
-      },
-    }
-  };
 
 }

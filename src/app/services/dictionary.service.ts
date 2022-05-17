@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { DictionaryResponse } from '../interfaces/dictionaryResponse';
 import { Observable } from 'rxjs';
 import { LanguageService } from './language.service';
+import * as scoreDictionary from '../../assets/scoreDictionary.json'
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,10 @@ export class DictionaryService {
 
   public async LookupWord(word: string): Promise<Array<DictionaryResponse> | undefined> {
     return await this.http.get<Array<DictionaryResponse>>('https://api.dictionaryapi.dev/api/v2/entries/en/' + word).toPromise();
+  }
+
+  public getWordsWithScore(score: number) : string[] {
+    return (scoreDictionary as any)[score.toString()];
   }
 }
 

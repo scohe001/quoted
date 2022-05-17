@@ -1,6 +1,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0"/>
-<div class="holder">
+<div class="holder" id="holder">
   <!--
     <mat-toolbar color="primary" class="header main-toolbar">
   -->
@@ -14,6 +14,9 @@
         <span class="header-item" (click)="showHelp()">
           <mat-icon>help_outline</mat-icon>
         </span>
+        <span class="header-item" (click)="showHandicap()">
+          <mat-icon>accessible_forward</mat-icon>
+        </span>
         <span class="header-item" (click)="share()">
           <mat-icon>share</mat-icon>
         </span>
@@ -22,14 +25,13 @@
 
     <app-word-box [(wordInput)]="textEntered" [targetScore]="targetScore" (scoreChange)="scoreChanged($event)" class="wordbox"></app-word-box>
 
-    <div class="score" [style.font-size]="scoreSize + 'px'">
-      <div *ngIf="showWinParticles" class="win-particles-box">
-        <div class="win-particles-cover"></div>
-        <div class="particle-holder">
-          <Particles id="tsparticles" [options]="particleOptions"></Particles>
+    <div id="score" class="score" [style.font-size]="scoreSize + 'px'">
+        <div *ngIf="showWinParticles" class="win-particles-box">
+          <div class="win-particles-cover"></div>
+          <div class="particle-holder">
+            <Particles id="tsparticles" [options]="particleOptions"></Particles>
+          </div>
         </div>
-
-      </div>
       <mat-label>{{targetScore - score}}</mat-label>
     </div>
   </div>

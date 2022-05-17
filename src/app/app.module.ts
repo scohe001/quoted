@@ -21,13 +21,15 @@ import { MatTableModule } from '@angular/material/table'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatIconModule } from '@angular/material/icon'
 import { NgParticlesComponent, NgParticlesModule } from 'ng-particles';
+import { HandicapDialog } from './main-game/handicap-dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainGameComponent,
     WordBoxComponent,
-    KeyboardComponent
+    KeyboardComponent,
+    HandicapDialog,
   ],
   imports: [
     BrowserModule,
